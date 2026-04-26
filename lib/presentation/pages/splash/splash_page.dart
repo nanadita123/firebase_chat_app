@@ -1,3 +1,5 @@
+import '../../../data/datasources/auth_remote_datasource.dart';
+import '../../../injection/injection.dart';
 import '../../export/splash_exports.dart';
 
 class SplashPage extends StatelessWidget {
@@ -6,7 +8,8 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SplashBloc()..add(StartSplash()),
+      create: (_) =>
+      SplashBloc(sl<AuthRemoteDataSource>())..add(StartSplash()),
       child: const SplashView(),
     );
   }
@@ -31,7 +34,7 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     super.initState();
-
+    context.read<SplashBloc>().add(StartSplash());
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -81,7 +84,7 @@ class _SplashViewState extends State<SplashView>
           if (state is SplashNavigateToLogin) {
             AppNavigator.pushReplacementNamed(context, AppRoutes.login);
           } else if (state is SplashNavigateToHome) {
-            AppNavigator.pushReplacementNamed(context,AppRoutes.home);
+            AppNavigator.pushReplacementNamed(context,AppRoutes.bottomNavBar);
           }
         },
         child: Container(

@@ -7,6 +7,7 @@ class AppSpacing {
 
   // 🔹 Common vertical spaces
   static const v4 = SizedBox(height: 4);
+  static const v6 = SizedBox(height: 6);
   static const v8 = SizedBox(height: 8);
   static const v12 = SizedBox(height: 12);
   static const v16 = SizedBox(height: 16);
@@ -20,6 +21,7 @@ class AppSpacing {
   // 🔹 Common horizontal spaces
   static const h4 = SizedBox(width: 4);
   static const h8 = SizedBox(width: 8);
+  static const h10 = SizedBox(width: 10);
   static const h12 = SizedBox(width: 12);
   static const h16 = SizedBox(width: 16);
   static const h20 = SizedBox(width: 20);

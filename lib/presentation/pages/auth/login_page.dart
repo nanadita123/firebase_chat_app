@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_chat_app/presentation/export/auth_exports.dart';
 
 class LoginPage extends StatelessWidget {
@@ -45,11 +47,13 @@ class LoginPage extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                final isLoginLoading = state is AuthLoading && state.type == "login";
+                final isGoogleLoading = state is AuthLoading && state.type == "google";
                 return Column(
                   children: [
                     AppButton(
                       text: AppStrings.signIn,
-                      isLoading: state is AuthLoading,
+                      isLoading: isLoginLoading,
                       onPressed: () {
                         context.read<AuthBloc>().add(
                           LoginEvent(
@@ -87,11 +91,23 @@ class LoginPage extends StatelessWidget {
 
                     AppSpacing.v16,
                     GoogleButton(
-                      isLoading: state is AuthLoading,
+                      isLoading: false,
                       onPressed: () {
                         context.read<AuthBloc>().add(GoogleSignInEvent());
                       },
                     ),
+                    if (isGoogleLoading)
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: Container(
+                          color: AppColors.darkBackground.withValues(alpha: 0.3),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 );
               },

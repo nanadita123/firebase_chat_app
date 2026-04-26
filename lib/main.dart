@@ -5,11 +5,13 @@ import 'core/bloc/app_bloc_providers.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
+import 'injection/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+   init();
   runApp(const MyApp());
 }
 

@@ -10,9 +10,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading("login"));
     try {
-      await authDataSource.login(email: event.email, password: event.password);
+      final user = await authDataSource.login(
+        email: event.email,
+        password: event.password,
+      );
+      if (user != null) {
+        await authDataSource.saveUser(user);
+      }
       emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -20,12 +26,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading("register"));
     try {
-      await authDataSource.register(
+      final user = await authDataSource.register(
         email: event.email,
         password: event.password,
       );
+      if (user != null) {
+        await authDataSource.saveUser(user);
+      }
       emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -36,9 +45,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     GoogleSignInEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(AuthLoading());
+    emit(AuthLoading("google"));
     try {
-      await authDataSource.signInWithGoogle();
+      final user = await authDataSource.signInWithGoogle();
+      if (user != null) {
+        await authDataSource.saveUser(user);
+      }
       emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure("Google Sign-In Failed"));

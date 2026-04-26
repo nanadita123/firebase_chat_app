@@ -69,6 +69,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
         labelText: widget.labelText,
 
         prefixIcon: widget.prefixIcon,
+        // prefixIconConstraints: BoxConstraints(
+        //   maxHeight: 20,
+        //   maxWidth: 20,
+        //   minHeight: 20,
+        //   minWidth: 20
+        // ),
 
         // Password toggle
         suffixIcon: widget.isPassword
